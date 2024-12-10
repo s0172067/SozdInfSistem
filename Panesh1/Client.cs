@@ -45,6 +45,18 @@ namespace Panesh1
             if (comment.Length > 500)
                 throw new ArgumentException("Комментарий слишком длинный.");
         }
+        public Client(string jsonString)
+        {
+            var jsonObject = JsonSerializer.Deserialize<JsonElement>(jsonString);
+    
+            id = jsonObject.GetProperty("id").GetInt32();
+            lastName = jsonObject.GetProperty("lastName").GetString();
+            firstName = jsonObject.GetProperty("firstName").GetString();
+            middleName = jsonObject.GetProperty("middleName").GetString();
+            comment = jsonObject.GetProperty("comment").GetString();
+
+            ValidateFields(lastName, firstName, middleName, comment);
+        }
 
 
 
