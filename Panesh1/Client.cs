@@ -30,12 +30,20 @@ namespace Panesh1
             this.comment = comment;
         }
 
+        private void ValidateString(string value, string fieldName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException($"{fieldName} не может быть пустым.");
+        }
+
         private void ValidateFields(string lastName, string firstName, string middleName, string comment)
         {
-            if (string.IsNullOrWhiteSpace(lastName)) throw new ArgumentException("Фамилия не может быть пустой.");
-            if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("Имя не может быть пустым.");
-            if (string.IsNullOrWhiteSpace(middleName)) throw new ArgumentException("Отчество не может быть пустым.");
-            if (comment.Length > 500) throw new ArgumentException("Комментарий слишком длинный.");
+            ValidateString(lastName, "Фамилия");
+            ValidateString(firstName, "Имя");
+            ValidateString(middleName, "Отчество");
+
+            if (comment.Length > 500)
+                throw new ArgumentException("Комментарий слишком длинный.");
         }
 
 
