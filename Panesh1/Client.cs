@@ -1,8 +1,15 @@
-﻿using System;
+using Panesh1;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Panesh1
 {
@@ -12,54 +19,51 @@ namespace Panesh1
         private string lastName;
         private string firstName;
         private string middleName;
-        private string comment;
-
-        public int Id => id;
-        public string LastName => lastName;
-        public string FirstName => firstName;
-        public string MiddleName => middleName;
-        public string Comment => comment;
-
-        public Client(int id, string lastName, string firstName, string middleName, string comment)
+        private string phone;
+        private string email;
+        private string birthday;
+        private string passport;
+        private string comment;       
+        
+        public Client(int id, string firstName, string lastName, string middleName,string phone,string email,string birthday,string passport, string comment) : base(id, firstName, lastName, phone, passport)
         {
-            ValidateFields(lastName, firstName, middleName, comment);
             this.id = id;
             this.lastName = lastName;
             this.firstName = firstName;
+            this.phone = phone;
+            this.passport = passport;
             this.middleName = middleName;
             this.comment = comment;
+            this.birthday = birthday;
+            this.email = email;       
         }
+       
+        public string GetEmail() => email;
+        public string GetBirthday() => birthday;
+        public string GetMiddleName() => middleName;
+        public string GetComment() => comment;
+        public string GetLastName() => lastName;
+        public string GetFirstName() => firstName;
+        public string GetPhone() => phone;
+        public string GetPassport() => passport;
+        public int getId() { return id; }
 
-        private void ValidateString(string value, string fieldName)
+
+        public void SetLastName(string lName) { this.lastName = lName; }
+        public void SetFirstName(string fName) { this.firstName = fName; }
+        public void SetId(int newID) {  this.id = newID; }
+        public void SetPhone(string newPhone) { this.phone = newPhone; } 
+        public void SetPassport(string newPassport){ this.passport = newPassport; } 
+        public void SetCommentl(string NewComment) {this.comment = NewComment; }
+        public void SetMiddleName(string NewMiddlename) {this.middleName = NewMiddlename; }
+        public void SetBirthday(string newBirthday) { this.birthday = newBirthday; }
+        public void SetEmail(string newEmail) { this.email = newEmail; }
+
+        public int GetHashCode()
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException($"{fieldName} не может быть пустым.");
+            return GetPassport().GetHashCode();
         }
-
-        private void ValidateFields(string lastName, string firstName, string middleName, string comment)
-        {
-            ValidateString(lastName, "Фамилия");
-            ValidateString(firstName, "Имя");
-            ValidateString(middleName, "Отчество");
-
-            if (comment.Length > 500)
-                throw new ArgumentException("Комментарий слишком длинный.");
-        }
-        public Client(string jsonString)
-        {
-            var jsonObject = JsonSerializer.Deserialize<JsonElement>(jsonString);
-    
-            id = jsonObject.GetProperty("id").GetInt32();
-            lastName = jsonObject.GetProperty("lastName").GetString();
-            firstName = jsonObject.GetProperty("firstName").GetString();
-            middleName = jsonObject.GetProperty("middleName").GetString();
-            comment = jsonObject.GetProperty("comment").GetString();
-
-            ValidateFields(lastName, firstName, middleName, comment);
-        }
-
-
 
     }
-
+    
 }
