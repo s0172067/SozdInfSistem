@@ -156,6 +156,31 @@ namespace Panesh1
                 return false;
             }
         }
+        public Client(string json)
+        {
+            var clientData = JsonConvert.DeserializeObject<Client>(json);
+
+            if (clientData != null)
+            {
+                id = clientData.id;
+                firstName = clientData.firstName;
+                lastName = clientData.lastName;
+                phone = clientData.phone;
+                passport = clientData.passport;
+                email = clientData.email;
+                birthday = clientData.birthday;
+                middleName = clientData.middleName;
+                comment = clientData.comment;
+            }
+        }
+
+        public string toJson()
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            Client client = this;
+            string jsonString = JsonConvert.SerializeObject(client, Formatting.Indented);
+            return jsonString;
+        }
 
         
         public int GetHashCode()
