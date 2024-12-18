@@ -188,6 +188,41 @@ namespace Panesh1
             return GetPassport().GetHashCode();
         }
 
+        
+        public override string toMyString()
+        {
+
+            return "Client {" + "\n"+
+                    "   id = " + id + "\n" +
+                    "   Firstname = " + firstName + "\n" +
+                    "   Lastname = " + lastName + "\n" +
+                    "   MiddleName = " + middleName + "\n"+
+                    "   Phone = " + phone + "\n" +
+                    "   Email = " + email + "\n"+
+                    "   Birthday = " + birthday + "\n"+
+                    "   Passport = " + passport + "\n" +
+                    '}';
+        }
+
+        public string shortInfo()
+        {
+            return "Client {" + "\n" +
+                    "\"id\": \"" + getId() + "\",\n" +
+                    "\"firstName\": \"" + GetFirstName() + "\",\n" +
+                    "\"lastName\": \"" + GetLastName() + "\",\n" +"}";
+
+        }
+
+       public bool ClientEquals(object obj)
+        {
+            if (obj is ShortClient othershClient)
+            {
+                //Console.WriteLine("!!!!!!!");
+                return this.GetPassport() == othershClient.GetPassport();
+            }
+            else return false; 
+        }
+
     }
     
 }
